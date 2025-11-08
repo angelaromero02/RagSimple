@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <title>Claro Colombia | Conéctate con todo</title>
+  <style>
+    :root {
+      --rojo: #e60000;
+      --rojo-dark: #b10000;
+      --gris: #f5f5f5;
+      --texto: #222;
+      --blanco: #fff;
+      --radius: 1.25rem;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fff;
+      color: var(--texto);
+      line-height: 1.5;
+    }
+    header {
+      background: var(--blanco);
+      border-bottom: 1px solid rgba(0,0,0,.05);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: .75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-weight: 700;
+      color: var(--rojo);
+      font-size: 1.1rem;
+    }
+    .logo-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 9999px;
+      background: var(--rojo);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: .7rem;
+      text-transform: uppercase;
+    }
+    .links {
+      display: flex;
+      gap: 1rem;
+    }
+    .links a {
+      text-decoration: none;
+      color: #333;
+      font-size: .9rem;
+      font-weight: 500;
+    }
+    .links a:hover {
+      color: var(--rojo);
+    }
+    .btn-primary {
+      background: var(--rojo);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: .6rem 1.3rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+    .btn-primary:hover {
+      background: var(--rojo-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(230,0,0,.35);
+    }
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.6rem 1rem 3.3rem;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .hero-left h1 {
+      font-size: 2.4rem;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+    .hero-left p {
+      color: #444;
+      margin-bottom: 1.5rem;
+      max-width: 32rem;
+    }
+    .hero-tag {
+      background: rgba(230,0,0,.07);
+      color: var(--rojo);
+      display: inline-flex;
+      gap: .5rem;
+      align-items: center;
+      padding: .25rem .7rem;
+      border-radius: 9999px;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .02rem;
+      margin-bottom: .9rem;
+    }
+    .hero-right {
+      background: radial-gradient(circle at center, rgba(230,0,0,.4), rgba(230,0,0,0));
+      display: flex;
+      justify-content: center;
+    }
+    .hero-card {
+      background: #fff;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255,255,255,.6);
+      box-shadow: 0 12px 38px rgba(0,0,0,.10);
+      width: min(360px, 100%);
+      padding: 1.3rem 1.3rem 1rem;
+      backdrop-filter: blur(9px);
+    }
+    .hero-card h2 {
+      font-size: 1.1rem;
+      margin-bottom: .5rem;
+    }
+    .hero-card small {
+      display: block;
+      margin-bottom: 1rem;
+      color: #555;
+    }
+    .hero-card ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+    .hero-card li {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: .3rem;
+      font-size: .85rem;
+      align-items: center;
+    }
+    .badge {
+      background: rgba(230,0,0,.09);
+      border: 1px solid rgba(230,0,0,.35);
+      height: 20px;
+      width: 20px;
+      display: grid;
+      place-items: center;
+      border-radius: 9999px;
+      font-size: .55rem;
+      font-weight: 700;
+      color: var(--rojo);
+    }
+    section {
+      padding: 3rem 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-title {
+      margin-bottom: 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-title h2 {
+      font-size: 1.4rem;
+    }
+    .filters {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      border: 1px solid rgba(0,0,0,.08);
+      padding: .35rem .9rem;
+      border-radius: 9999px;
+      background: #fff;
+      cursor: pointer;
+      font-size: .75rem;
+      font-weight: 500;
+      transition: .15s;
+    }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: rgba(230,0,0,.1);
+      border-color: rgba(230,0,0,.4);
+      color: var(--rojo);
+    }
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.3rem;
+    }
+    .plan-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.04);
+      border-radius: 1.25rem;
+      padding: 1.25rem 1.1rem 1.3rem;
+      box-shadow: 0 7px 25px rgba(0,0,0,.05);
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      transition: transform .15s;
+    }
+    .plan-card:hover {
+      transform: translateY(-2px);
+    }
+    .plan-type {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .06rem;
+      color: #999;
+    }
+    .plan-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .plan-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--rojo);
+    }
+    .plan-price small {
+      font-size: .7rem;
+      font-weight: 500;
+      color: #555;
+    }
+    .plan-features {
+      list-style: none;
+      margin-top: .3rem;
+      margin-bottom: .6rem;
+    }
+    .plan-features li {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      font-size: .8rem;
+      margin-bottom: .25rem;
+    }
+    .btn-secondary {
+      background: #fff;
+      border: 1px solid rgba(230,0,0,.4);
+      color: var(--rojo);
+      border-radius: 9999px;
+      padding: .4rem 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: .8rem;
+      margin-top: auto;
+    }
+    .highlight {
+      outline: 2px solid rgba(230,0,0,.12);
+      background: radial-gradient(circle at top, rgba(230,0,0,.04), #fff);
+    }
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .card {
+      background: #fff;
+      border-radius: 1.25rem;
+      border: 1px solid rgba(0,0,0,.03);
+      box-shadow: 0 7px 25px rgba(0,0,0,.03);
+      padding: 1.2rem 1.2rem 1rem;
+    }
+    form {
+      display: grid;
+      gap: .7rem;
+    }
+    input, select, textarea {
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: .7rem;
+      padding: .55rem .7rem;
+      font-size: .9rem;
+      width: 100%;
+      outline-color: rgba(230,0,0,.5);
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    footer {
+      background: #111;
+      color: #ccc;
+      padding: 1.4rem 1rem 2.2rem;
+      text-align: center;
+      font-size: .75rem;
+      margin-top: 2.5rem;
+    }
+
+    /* mobile */
+    @media (max-width: 850px) {
+      .hero,
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+      .links {
+        display: none;
+      }
+      .hero-left h1 {
+        font-size: 2.05rem;
+      }
+      .hero-card {
+        margin-top: .5rem;
+      }
+      .section-title {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="logo">
+        <div class="logo-circle">CL</div>
+        <span>Claro Colombia</span>
+      </div>
+      <div class="links">
+        <a href="#planes">Planes</a>
+        <a href="#hogar">Hogar</a>
+        <a href="#empresas">Empresas</a>
+        <a href="#contacto">Contáctanos</a>
+      </div>
+      <button class="btn-primary" onclick="scrollToSection('contacto')">Soy cliente</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-tag">
+          <span>Nuevo</span> <span>Fibra + Móvil con hasta 50% dto*</span>
+        </div>
+        <h1>Conéctate con la red más grande de Colombia</h1>
+        <p>Lleva tu plan de datos ilimitados, TV y fibra óptica en un solo paquete. Sin enredos, sin letras pequeñas que no entiendas.</p>
+        <div style="display:flex; gap: .75rem; flex-wrap:wrap;">
+          <button class="btn-primary" onclick="scrollToSection('planes')">Ver planes</button>
+          <button class="btn-secondary" onclick="scrollToSection('contacto')">Me llaman</button>
+        </div>
+        <p style="margin-top:.7rem; font-size:.72rem; color:#555;">Aplican términos y condiciones. Cobertura sujeta a disponibilidad.</p>
+      </div>
+      <div class="hero-right">
+        <div class="hero-card">
+          <h2>Plan Destacado</h2>
+          <small>Fibra 300 Mbps + Móvil ilimitado</small>
+          <ul>
+            <li><span class="badge">✓</span> Instalación sin costo</li>
+            <li><span class="badge">✓</span> WiFi 5G incluido</li>
+            <li><span class="badge">✓</span> Apps de entretenimiento</li>
+          </ul>
+          <p style="font-size:1.5rem; font-weight:700; margin-bottom:.5rem; color:var(--rojo);">$119.900 <span style="font-size:.7rem; color:#555;">/ mes</span></p>
+          <button class="btn-primary" onclick="selectPlan('Fibra 300 + Móvil ilimitado')">Lo quiero</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANES -->
+    <section id="planes">
+      <div class="section-title">
+        <h2>Planes para lo que necesites</h2>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="movil">Móvil</button>
+          <button class="filter-btn" data-filter="hogar">Hogar</button>
+          <button class="filter-btn" data-filter="empresas">Empresas</button>
+        </div>
+      </div>
+      <div class="plans-grid" id="plans-grid">
+        <!-- MOVIL -->
+        <article class="plan-card highlight" data-type="movil">
+          <span class="plan-type">Móvil</span>
+          <h3 class="plan-name">Ilimitado Plus 5G</h3>
+          <p class="plan-price">$79.900 <small>/ mes</small></p>
+          <ul class="plan-features">
+            <li><span class="badge">✓</span> Datos ilimitados</li>
+            <li><span class="badge">✓</span> Minutos ilimitados</li>
+            <li><span class="badge">✓</span> Roaming América</li>
+          </ul>
+          <button class="btn-secondary" onclick="selectPlan('Ilimitado Plus 5G')">Solicitar</button>
+        </article>
+        <!-- MOVIL -->
+        <article class="plan-card" data-type="movil">
+          <span class="plan-type">Móvil</span>
+          <h3 class="plan-name">30 GB Control</h3>
+          <p class="plan-price">$49.900 <small>/ mes</small></p>
+          <ul class="plan-features">
+            <li><span class="badge">✓</span> 30 GB navegación</li>
+            <li><span class="badge">✓</span> Redes sociales</li>
+            <li><span class="badge">✓</span> WhatsApp sin consumir datos</li>
+          </ul>
+          <button class="btn-secondary" onclick="selectPlan('30 GB Control')">Solicitar</button>
+        </article>
+        <!-- HOGAR -->
+        <article class="plan-card" data-type="hogar" id="hogar">
+          <span class="plan-type">Hogar</span>
+          <h3 class="plan-name">Fibra 200 Mbps</h3>
+          <p class="plan-price">$94.900 <small>/ mes</small></p>
+          <ul class="plan-features">
+            <li><span class="badge">✓</span> WiFi doble banda</li>
+            <li><span class="badge">✓</span> Instalación básica</li>
+            <li><span class="badge">✓</span> Soporte 24/7</li>
+          </ul>
+          <button class="btn-secondary" onclick="selectPlan('Fibra 200 Mbps')">Solicitar</button>
+        </article>
+        <!-- HOGAR -->
+        <article class="plan-card" data-type="hogar">
+          <span class="plan-type">Hogar</span>
+          <h3 class="plan-name">Tripleplay</h3>
+          <p class="plan-price">$129.900 <small>/ mes</small></p>
+          <ul class="plan-features">
+            <li><span class="badge">✓</span> Internet + TV + Teléfono</li>
+            <li><span class="badge">✓</span> +90 canales HD</li>
+            <li><span class="badge">✓</span> Grabación en la nube</li>
+          </ul>
+          <button class="btn-secondary" onclick="selectPlan('Tripleplay')">Solicitar</button>
+        </article>
+        <!-- EMPRESAS -->
+        <article class="plan-card" data-type="empresas" id="empresas">
+          <span class="plan-type">Empresas</span>
+          <h3 class="plan-name">Corporativo 500</h3>
+          <p class="plan-price">$279.000 <small>/ mes</small></p>
+          <ul class="plan-features">
+            <li><span class="badge">✓</span> 500 Mbps simétricos</li>
+            <li><span class="badge">✓</span> IP fija</li>
+            <li><span class="badge">✓</span> SLA empresarial</li>
+          </ul>
+          <button class="btn-secondary" onclick="selectPlan('Corporativo 500')">Cotizar</button>
+        </article>
+        <!-- EMPRESAS -->
+        <article class="plan-card" data-type="empresas">
+          <span class="plan-type">Empresas</span>
+          <h3 class="plan-name">M2M / IoT</h3>
+          <p class="plan-price">$15.000 <small>/ línea</small></p>
+          <ul class="plan-features">
+            <li><span class="badge">✓</span> SIM para dispositivos</li>
+            <li><span class="badge">✓</span> Panel de gestión</li>
+            <li><span class="badge">✓</span> Alertas y consumo</li>
+          </ul>
+          <button class="btn-secondary" onclick="selectPlan('M2M / IoT')">Cotizar</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS + CONTACTO -->
+    <section id="contacto" class="two-cols">
+      <div>
+        <h2>Clientes que ya están conectados</h2>
+        <p style="margin-bottom:1rem;">Historias reales de usuarios en Colombia que migraron a fibra y ahora trabajan, estudian y se entretienen sin interrupciones.</p>
+        <div class="card" style="margin-bottom:.75rem;">
+          <strong>“El internet dejó de caerse”</strong>
+          <p style="font-size:.8rem; margin:.25rem 0 .4rem;">“Pasamos de 10 Mbps a 200 Mbps y mis hijos ya pueden estar en clase al mismo tiempo que yo trabajo.”</p>
+          <small>María, Popayán</small>
+        </div>
+        <div class="card">
+          <strong>“El soporte sí responde”</strong>
+          <p style="font-size:.8rem; margin:.25rem 0 .4rem;">“Abrí un ticket desde la app y en menos de 24 horas ya estaba resuelto.”</p>
+          <small>Carlos, Cali</small>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Déjanos tus datos</h2>
+        <p style="font-size:.8rem; margin-bottom:.65rem;">Un asesor te contactará para validar cobertura y los descuentos disponibles en tu ciudad.</p>
+        <form id="lead-form">
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required />
+          <input type="tel" id="telefono" name="telefono" placeholder="Celular / WhatsApp" required />
+          <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required />
+          <select id="interes" name="interes">
+            <option value="">¿Qué te interesa?</option>
+            <option value="movil">Plan móvil</option>
+            <option value="hogar">Internet hogar</option>
+            <option value="empresas">Soluciones empresariales</option>
+          </select>
+          <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos qué servicio necesitas"></textarea>
+          <button type="submit" class="btn-primary">Enviar solicitud</button>
+          <p id="form-msg" style="font-size:.7rem; margin-top:.5rem; color: #333;"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Claro Colombia (demo). Esta es una maqueta de ejemplo. Términos y condiciones aplican.
+  </footer>
+
+  <script>
+    // Scroll a sección
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Filtro de planes
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const planCards = document.querySelectorAll(".plan-card");
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.dataset.filter;
+
+        planCards.forEach(card => {
+          if (filter === "all") {
+            card.style.display = "flex";
+          } else {
+            card.style.display = card.dataset.type === filter ? "flex" : "none";
+          }
+        });
+      });
+    });
+
+    // Simular selección de plan
+    function selectPlan(nombrePlan) {
+      scrollToSection("contacto");
+      const interes = document.getElementById("interes");
+      if (interes) {
+        if (nombrePlan.toLowerCase().includes("fibra") || nombrePlan.toLowerCase().includes("triple")) {
+          interes.value = "hogar";
+        } else if (nombrePlan.toLowerCase().includes("corporativo") || nombrePlan.toLowerCase().includes("m2m")) {
+          interes.value = "empresas";
+        } else {
+          interes.value = "movil";
+        }
+      }
+      const msg = document.getElementById("mensaje");
+      if (msg) {
+        msg.value = "Estoy interesad@ en el plan: " + nombrePlan;
+      }
+    }
+
+    // Manejo básico de formulario
+    const form = document.getElementById("lead-form");
+    const formMsg = document.getElementById("form-msg");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = {
+        nombre: form.nombre.value.trim(),
+        telefono: form.telefono.value.trim(),
+        correo: form.correo.value.trim(),
+        interes: form.interes.value,
+        mensaje: form.mensaje.value.trim()
+      };
+      console.log("Lead capturado:", data);
+      formMsg.textContent = "Gracias " + data.nombre + ". Un asesor te contactará pronto.";
+      form.reset();
+      setTimeout(() => formMsg.textContent = "", 7000);
+    });
+  </script>
+  <script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+	webhookUrl: 'https://midwintry-unlionised-claribel.ngrok-free.dev/webhook/65e5a7e7-8cfd-4b8f-8cdb-43e0c224009b/chat',
+    	webhookConfig: {
+		method: 'POST',
+		headers: {}
+	},
+	target: '#n8n-chat',
+	mode: 'window',
+	chatInputKey: 'chatInput',
+	chatSessionKey: 'sessionId',
+	loadPreviousSession: true,
+	metadata: {},
+	showWelcomeScreen: false,
+	defaultLanguage: 'en',
+	initialMessages: [
+		'Hola! 👋',
+		'Mi nombre es Ange. ¿Cómo podemos ayudarte hoy?'
+	],
+	i18n: {
+		en: {
+			title: 'Hola! 👋👋',
+			subtitle: "Estamos atentos a responder tus inquietudes.",
+			footer: '',
+			getStarted: 'Nueva Coversación',
+			inputPlaceholder: 'Por favor, escriba su pregunta..',
+		},
+	},
+	enableStreaming: false,
+});
+    
+// createChat({
+//		webhookUrl: 'https://midwintry-unlionised-claribel.ngrok-free.dev/webhook/65e5a7e7-8cfd-4b8f-8cdb-43e0c224009b/chat'
+//	});
+</script>
+</body>
+</html>
